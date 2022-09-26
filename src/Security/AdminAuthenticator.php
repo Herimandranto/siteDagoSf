@@ -46,7 +46,7 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('admin-dashboard'));
+        return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
     }
 
     protected function getLoginUrl(Request $request): string

@@ -2,29 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Item;
+use App\Entity\Slogan;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Item1Type extends AbstractType
+class SloganType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('price')
-            ->add('description')
-            ->add('image')
-            ->add('category')
-            
-        ;
+            ->add('title', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control form-control-sm',
+                    'placeholder' => 'modifier le slogan ici'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Item::class,
+            'data_class' => Slogan::class,
         ]);
     }
 }

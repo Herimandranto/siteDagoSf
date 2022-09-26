@@ -6,11 +6,18 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+/**
+ * @ORM\Entity 
+ * @Vich\Uploadable
+ */
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,6 +38,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = null;
+
+
+    /**
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     maxSizeMessage = "Taille de l'image ne doit pas depasser 2Mo",
+     *     mimeTypes = {"image/jpeg","image/gif","image/png", "image/jpg", "image/svg",},
+     *     mimeTypesMessage = "Veuillez Uploader le bon format tell que jpeg, jpg, png"
+     * )
+     * @var File
+     */
+    private $avatarFile;
+
+
+    public function __construct()
+    {
+        //avatar.png;
+        $this->avatar = "avatar.png";
+    }
+
 
     public function getId(): ?int
     {
@@ -131,5 +161,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+
+    public function setAvatarFile(File $avatar = null)
+    {
+        $this->avatarFile = $avatar;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($avatar) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
     }
 }

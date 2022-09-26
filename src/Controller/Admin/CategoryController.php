@@ -13,15 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'app_category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-        ]);
-    }
 
-    #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
+
+    #[Route('/new', name: 'category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
@@ -52,7 +46,7 @@ class CategoryController extends AbstractController
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+        $form->handleRequest($request); 
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);

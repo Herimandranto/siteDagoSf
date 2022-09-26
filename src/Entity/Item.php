@@ -11,7 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 /**
- * @ORM\Entity
+ * @ORM\Entity 
  * @Vich\Uploadable
  */
 class Item
@@ -40,7 +40,7 @@ class Item
      */
     private $imageFile;
 
-
+ 
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;

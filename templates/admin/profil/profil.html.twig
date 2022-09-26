@@ -3,27 +3,44 @@
 {% block title %}Profil{% endblock title %}
 
 {% block body %}
-
+    <section id="main-content">
       <section class="wrapper site-min-height">
         <div class="row mt">
           <div class="col-lg-12">
             <div class="row content-panel">
+
+
+              {% for message in app.flashes('success') %}
+                <div class="alert text-center alert-success">
+                    {{ message }}
+                </div>
+              {% endfor %}
+
+
               <div class="col-md-2 profile-text mt mb centered">
                 
               </div>
               <!-- /col-md-4 -->
               <div class="col-md-5 profile-text">
-                <h3>Titre caroussel</h3>
-                <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
-                <br>
-                <p><button class="btn btn-theme"><i class="fa fa-envelope"></i> Modifier</button></p>
+                <form method="POST" action="#">
+                  <h3>Texte Slogan</h3>
+                  <p>{% if slogan.title %}{{ slogan.title }}{% else %}Vous n'avez pas encore ajouter un slogan {% endif %}</p>
+                  
+                  <input type="text" class="form-control" name="slogan">
+                  
+                  <p style="margin-top:5px;"><button class="btn btn-theme"><i class="fa fa-edit"></i> Modifier</button></p>
+                </form>
               </div>
               <!-- /col-md-4 -->
               <div class="col-md-5 centered">
                 <div class="profile-pic">
-                  <p><img src="img/ui-sam.jpg" class="img-circle"></p>
+                  <p><img src="{{ asset('admin/images/avatar/'~user.avatar) }}" class="img-circle"></p>
                   <p>
+                    {{ form_start(userform) }}
+                    <center>{{ form_widget(userform.avatarFile) }}                                                    
+                      {{ form_errors(userform.avatarFile) }}
                     <button class="btn btn-theme02">Modifier la photo</button>
+                    {{ form_end(userform) }}
                   </p>
                 </div>
               </div>
@@ -104,46 +121,35 @@
                   <!-- /tab-pane -->
                   <div id="edit" class="tab-pane">
                     <div class="row">
-                      <div class="col-lg-8 col-lg-offset-2 detailed">
-                        <h4 class="mb">Personal Information</h4>
-                        <form role="form" class="form-horizontal">
+                      <div class="col-lg-19 col-lg-offset-2 detailed">
+                        <h4 class="mb">Information Personnelle</h4>
+                        <div class="form-horizontal">
+                          {{ form_start(form_pass) }}
                           <div class="form-group">
-                            <label class="col-lg-2 control-label"> Avatar</label>
+                            <label class="col-lg-3 control-label">Ancien mot de passe</label>
                             <div class="col-lg-6">
-                              <input type="file" id="exampleInputFile" class="file-pos">
+                              {{ form_widget(form_pass.oldPassword) }}
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="col-lg-2 control-label">Company</label>
+                            <label class="col-lg-3 control-label">Votre nouveau mot de passe</label>
                             <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="c-name" class="form-control">
+                              {{ form_widget(form_pass.newPassword) }}
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="col-lg-2 control-label">Lives In</label>
+                            <label class="col-lg-3 control-label">Confirmer le nouveau mot de passe</label>
                             <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="lives-in" class="form-control">
+                              {{ form_widget(form_pass.confirmPassword) }}
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="col-lg-2 control-label">Country</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="country" class="form-control">
+                            <div class="col-lg-offset-3 col-lg-9">
+                              <button class="btn btn-theme" type="submit">Enregistrer</button>
                             </div>
                           </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Description</label>
-                            <div class="col-lg-10">
-                              <textarea rows="10" cols="30" class="form-control" id="" name=""></textarea>
-                            </div>
-                          </div>
-                            <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                              <button class="btn btn-theme" type="submit">Save</button>
-                              <button class="btn btn-theme04" type="button">Cancel</button>
-                            </div>
-                          </div>
-                        </form>
+                          {{ form_end(form_pass) }}
+                        </div>
                       </div>
                       
                     </div>
@@ -161,6 +167,6 @@
         </div>
         <!-- /container -->
       </section>
-
+    </section>
 
 {% endblock body %}

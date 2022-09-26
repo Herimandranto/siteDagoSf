@@ -1,0 +1,195 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}gestion{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/datatable/datatables.min.css') }}" />
+
+{% endblock  %}
+
+{% block body %}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row">
+            <div class="container">
+                <div class="col-lg-12 mt">
+                    <div class="row content-panel">
+                      <div class="panel-heading">
+                        <ul class="nav nav-tabs nav-justified">
+                          <li class="active">
+                            <a data-toggle="tab" href="#category" class="contact-map">Catégorie</a>
+                          </li>
+                          <li>
+                            <a data-toggle="tab" href="#item">Ajouter un nouveau Item</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- /panel-heading -->
+                      <div class="panel-body">
+                        <div class="tab-content">
+                          <div id="category" class="tab-pane active">
+                            <div class="row">
+                              <div class="col-lg-8 col-lg-offset-2 detailed ">
+                                <h4 class="mb">Nouveau catégorie</h4>
+                                <div class="form-horizontal">
+                                {{ form_start(form) }}
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Titre</label>
+                                    <div class="col-lg-6">
+                                      {{ form_widget(form.title) }}
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Code</label>
+                                    <div class="col-lg-6">
+                                      {{ form_widget(form.code) }}
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Code</label>
+                                    <div class="col-lg-6">
+                                      {{ form_widget(form.imageFile) }}
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                      <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                    </div>
+                                  </div>
+                                {{ form_end(form) }}
+                                </div>
+                              </div>
+                              <!-- /col-lg-8 -->
+                              <!-- /col-md-6 -->
+                            </div>
+                            <!-- /row -->
+                          </div>
+                          <!-- /tab-pane -->
+                          <div id="item" class="tab-pane">
+                            <div class="row">
+                              <div class="col-lg-8 col-lg-offset-2 detailed">
+                                <h4 class="mb">nouveau Item</h4>
+                                <div class="form-horizontal">
+                                    {{ form_start(form1) }}
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">catégorie</label>
+                                        <div class="col-lg-6">
+                                            <select id="category"  class="form-control" name="category">
+                                                {% for ctgr in categories %}
+                                                    <option value="{{ ctgr.id }}" > {{ ctgr.title }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">titre</label>
+                                    <div class="col-lg-6">
+                                        {{ form_widget(form1.title) }}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Tarif</label>
+                                    <div class="col-lg-6">
+                                        {{ form_widget(form1.price) }}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label"> photo</label>
+                                    <div class="col-lg-6">
+                                        {{ form_widget(form1.imageFile) }}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Description</label>
+                                    <div class="col-lg-10">
+                                      <textarea rows="10" cols="30" class="form-control"  name="description"></textarea>
+                                    </div>
+                                  </div>
+                                    <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                      <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                    </div>
+                                  </div>
+                                  {{ form_end(form1) }}
+                                </div>
+                              </div>
+                              
+                            </div>
+                            <!-- /row -->
+                          </div>
+                          <!-- /tab-pane -->
+                        </div>
+                        <!-- /tab-content -->
+                      </div>
+                      <!-- /panel-body -->
+                    </div>
+                    <!-- /col-lg-12 -->
+                  </div>
+                </div>
+            </div>
+            <br/>
+            <div class="container">
+                <h3  class="text-center">Gestion des paramètres</h3>
+                <br/>
+                <table id="tab" class="display table table-striped table-hover table-bordered">
+                   
+                    <thead style="background-color:#282e36;color:white;">
+                        <tr >
+                            <th class="text-center">Categorie</th>
+                            <th class="text-center">Titre</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">photo</th>
+                            <th class="text-center">tarif</th>
+                            <th class="text-center" width="130px">actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for item in items %}
+                        <tr>
+                            <td  class="text-center">{{ item.category.title }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.description }}</td>
+                            <td  class="text-center"><center><img  style="width:70px;border-radius:5px;" src="{{ asset('admin/images/produits/'~item.image) }}"/></center></td>
+                            <td  class="text-center">{{ item.price }}</td>
+                            <td  class="text-center">
+                                <form method="post" action="#" onsubmit="return confirm('êtes-vous sur vouloir cet item?');">
+                                    <input type="hidden" name="_token" value="#">
+                                    <a class="btn btn-success fa fa-eye"></a>  
+                                    <a class="btn btn-primary fa fa-pencil"></a>  
+                                    <button class="btn btn-danger fa fa-trash-o"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('admin/datatable/datatables.min.js') }}"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('#tab').DataTable({
+
+            pagingType: "simple_numbers",
+            lengthMenu: [5,8,10,20],
+            pageLength: 5
+
+        });
+
+    });
+
+</script>
+{% endblock %}
