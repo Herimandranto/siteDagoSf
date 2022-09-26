@@ -1,0 +1,38 @@
+<aside>
+    <div id="sidebar" class="nav-collapse ">
+  
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+        <p class="centered"><a href="profile.html"><img src="{{ asset('admin/images/avatar/'~user.avatar) }}" class="img-circle" width="80"></a></p>
+        <h5 class="centered">Nom Admin</h5>
+        
+        <li class="mt">
+          <a class="{{ accueil is defined ? 'active' : ''  }}" href="#">
+            <i class="fa fa-desktop"></i>
+            <span>Accueil</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+          <a class="{{ profil is defined ? 'active' : ''  }}"  href="{{ path('admin_profil') }}">
+            <i class="fa fa-user  "></i>
+            <span>Gérer votre Profil</span>
+            </a>
+        </li>
+
+        <li class="sub-menu">
+          <a class="{{ tableau is defined ? 'active' : ''  }}" href="{{ path('admin_tableau') }}">
+            <i class="fa fa-cogs"></i>
+            <span>gestion des paramètres</span>
+            </a>
+        </li>
+        <li class="sub-menu">
+          <a href="#">
+            <i class="fa fa-book"></i>
+            <span>Extra Pages</span>
+            </a>
+        </li>
+      
+      </ul>
+      <!-- sidebar menu end-->
+    </div>
+  </aside>

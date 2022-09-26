@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Dagoutsourcing - Login</title>
+
+  <!-- Favicons -->
+  <link href="{{ asset('') }}" rel="icon">
+  
+  <!-- Bootstrap core CSS -->
+  <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!--external css-->
+  <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin/css/style-responsive.css') }}" rel="stylesheet">
+  
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+    <div class="container">
+      <form class="form-login" method="post" >
+        {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+        {% endif %}
+
+        <h2 class="form-login-heading">se connecter</h2>
+        <div class="login-wrap">
+          <input type="email" value="{{ last_username }}" class="form-control" 
+          name="email" id="inputEmail" autocomplete="email" required placeholder="Nom d'utilisateur" autofocus>
+          <br>
+          <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" autocomplete="current-password" required>
+          
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+          {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+    
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+
+          <label class="checkbox">
+            <input type="checkbox" value="remember-me"> se souvenir de moi
+            <span class="pull-right">
+            <a data-toggle="modal" href="login.html#myModal"> mot de passe oublié?</a>
+            </span>
+            </label>
+
+          <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+          <hr>
+        
+          <div class="registration">
+            Vous n'avez pas encore de compte?<br/>
+            <a class="" href="{{ path('app_register') }}">
+              Créer un compte
+              </a>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Vous avez oublié votre mot de passe ?</h4>
+              </div>
+              <div class="modal-body">
+                <p>Entrer votre adresse mail pour réinitialiser votre mot de passe.</p>
+                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">annuler</button>
+                <button class="btn btn-theme" type="button">Envoyer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
+      </form>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+  <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="{{ asset('admin/js/jquery.backstretch.min.js') }}"></script>
+  <script>
+    $.backstretch("img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
