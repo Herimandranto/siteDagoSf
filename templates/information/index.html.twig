@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information index{% endblock %}
+
+{% block body %}
+    <h1>Information index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adresse</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Facebook</th>
+                <th>Skype</th>
+                <th>LinkedIn</th>
+                <th>Wathsapp</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for information in information %}
+            <tr>
+                <td>{{ information.id }}</td>
+                <td>{{ information.adresse }}</td>
+                <td>{{ information.phone }}</td>
+                <td>{{ information.email }}</td>
+                <td>{{ information.facebook }}</td>
+                <td>{{ information.skype }}</td>
+                <td>{{ information.linkedIn }}</td>
+                <td>{{ information.wathsapp }}</td>
+                <td>
+                    <a href="{{ path('app_information_show', {'id': information.id}) }}">show</a>
+                    <a href="{{ path('app_information_edit', {'id': information.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_information_new') }}">Create new</a>
+{% endblock %}

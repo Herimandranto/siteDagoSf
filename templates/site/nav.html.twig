@@ -6,42 +6,41 @@
     </div>
     <div class="site-mobile-menu-body">
       
-            <nav class="site-navigation  text-center" role="navigation">
+            <nav class="site-navigation  text-center">
 
               <ul class="site-menu site-nav-wrap main-menu nav nav-pills">
 
-                <li role="presentation">
-                  <a href="#accueil" data-toggle="tab" class="nav-link text-left">Accueil</a>
+                <li>
+                  <a href="{{ path('sitebase') }}"  class="nav-link text-left {{ acceuil is defined ? 'active show' : ''  }}">Accueil</a>
+                </li> 
+
+                <li>
+                  <a href="{{ path('relation-client') }}"  class="nav-link text-left {{ rlClient is defined ? 'active show' : ''  }}">Relation Client</a>
                 </li>
 
-                <li role="presentation">
-                  <a href="#rl-client" data-toggle="tab" class="nav-link text-left">Relation Client</a>
+                <li >
+                  <a href="{{ path('devWeb') }}" class="nav-link text-left {{ devWeb is defined ? 'active show' : ''  }}">Développement Web</a>
                 </li>
 
-                <li role="presentation">
-                  <a href="#dev" data-toggle="tab" class="nav-link text-left">Développement Web</a>
+                <li>
+                  <a href="{{ path('redactionWeb') }}" class="nav-link text-left {{ redactionWeb is defined ? 'active show' : ''  }}">Rédaction Web et SEO</a>
                 </li>
 
-                <li role="presentation">
-                  <a href="#redact" data-toggle="tab" class="nav-link text-left">Rédaction Web et SEO</a>
+                <li>
+                  <a href="{{ path('multimedia') }}" class="nav-link text-left {{ multimedia is defined ? 'active show' : ''  }}">Multimédia</a>
                 </li>
 
-                <li role="presentation">
-                  <a href="#multimedia" data-toggle="tab" class="nav-link text-left">Multimédia</a>
+                <li>
+                  <a href="{{ path('opSaisie') }}" class="nav-link text-left {{ opSaisie is defined ? 'active show' : ''  }}">Opération de Saisie</a>
                 </li>
 
-                <li role="presentation">
-                  <a href="#saisie" data-toggle="tab" class="nav-link text-left">Opération de Saisie</a>
-                </li>
-
-                <li role="presentation">
-                  <a href="#contact" data-toggle="tab" class="nav-link  text-left">Contact</a>
+                <li>
+                  <a href="{{ path('contact') }}" class="nav-link  text-left {{ contact is defined ? 'active show' : ''  }}">Contact</a>
                 </li>
 
               </ul>
 
             </nav>
-
 
     </div>
   </div>
@@ -51,7 +50,7 @@
       <div class="row align-items-center">
         <div class="col-10 col-lg-12">
           <center><a href="index.php" class="site-logo">
-              <span><img src="images/logo.png" width="45px" style="margin-bottom:6px"> </span>Dagoutsourcing
+              <span><img src="{{ asset('images/logo.png') }}" width="45px" style="margin-bottom:6px"> </span>Dagoutsourcing
             </a></center>
         </div>
         <div class="col-2 d-lg-none text-right">
@@ -72,32 +71,32 @@
 
               <ul class="site-menu main-menu nav nav-pills mr-auto d-none pl-0 d-lg-block">
 
-                <li class="active" role="presentation">
-                  <a href="#accueil" data-toggle="tab" class="nav-link text-left">Accueil</a>
+                <li>
+                  <a href="{{ path('sitebase') }}"  class="nav-link text-left {{ acceuil is defined ? 'active show' : ''  }}">Accueil</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#rl-client" data-toggle="tab" class="nav-link text-left">Relation Client</a>
+                  <a href="{{ path('relation-client') }}"  class="nav-link text-left {{ rlClient is defined ? 'active show' : ''  }}  ">Relation Client</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#dev" data-toggle="tab" class="nav-link text-left">Développement Web</a>
+                  <a href="{{ path('devWeb') }}"  class="nav-link text-left {{ devWeb is defined ? 'active show' : ''  }}">Développement Web</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#redact" data-toggle="tab" class="nav-link text-left">Rédaction Web et SEO</a>
+                  <a href="{{ path('redactionWeb') }}"  class="nav-link text-left {{ redactionWeb is defined ? 'active show' : ''  }}">Rédaction Web et SEO</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#multimedia" data-toggle="tab" class="nav-link text-left">Multimédia</a>
+                  <a href="{{ path('multimedia') }}" class="nav-link text-left {{ multimedia is defined ? 'active show' : ''  }}">Multimédia</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#saisie" data-toggle="tab" class="nav-link text-left">Opération de Saisie</a>
+                  <a href="{{ path('opSaisie') }}" class="nav-link text-left {{ opSaisie is defined ? 'active show' : ''  }}">Opération de Saisie</a>
                 </li>
 
                 <li role="presentation">
-                  <a href="#contact" data-toggle="tab" class="nav-link  text-left">Contact</a>
+                  <a href="{{ path('contact') }}" class="nav-link  text-left {{ contact is defined ? 'active show' : ''  }}">Contact</a>
                 </li>
 
               </ul>

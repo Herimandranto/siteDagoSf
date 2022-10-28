@@ -3,17 +3,24 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Item;
+use App\Entity\Text1;
 use App\Form\ItemType;
 use App\Form\UserType;
+use App\Form\Text1Type;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Entity\Information;
+use App\Form\InformationType;
 use App\Entity\PasswordUpdate;
+use App\Entity\Slogan;
 use App\Form\PasswordUpdateType;
 use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
+use App\Repository\Text1Repository;
 use App\Repository\SloganRepository;
 use Symfony\Component\Form\FormError;
 use App\Repository\CategoryRepository;
+use App\Repository\InformationRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,16 +36,22 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'admin_dashboard', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
 
+
         $user = $this->getUser();
+        if (!$user) {
+            $session = $request->getSession();
+            $session->clear();
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('admin/index.html.twig', [
             'accueil' => 'accueil',
             'user' => $user
         ]);
     }
-
 
 
     #[Route('/profil', name: 'admin_profil', methods: ['GET', 'POST'])]
@@ -47,13 +60,31 @@ class AdminController extends AbstractController
         UserPasswordHasherInterface $passwordEncoder,
         SloganRepository $sloganRepository,
         UserRepository $userRepository,
-        UserInterface $user,
+        InformationRepository $informationRepository,
         SluggerInterface $slugger,
         ManagerRegistry $doctrine
     ): Response {
+
+
+        $user1 = $this->getUser();
+
+        if (!$user1) {
+            $session = $request->getSession();
+            $session->clear();
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = $this->getUser();
+
         $em = $doctrine->getManager();
-        $slogan1 = $sloganRepository->find(1);
+        $slogans = $sloganRepository->findAll();
+        if ($slogans[0]) {
+            $slogan1 = $slogans[0];
+        } else {
+            $slogan1 = new Slogan();
+        }
+
+
         // Slogan form
 
         if ($request->get('slogan')) {
@@ -64,7 +95,29 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_profil', [], Response::HTTP_SEE_OTHER);
         }
 
-        //      Update password
+
+        //      Ajout et mise à jour des Informations du site
+
+        if ($informationRepository->find(1)) {
+            $information = $informationRepository->find(1);
+        } else {
+            $information = new Information();
+        }
+
+        $info_form = $this->createForm(InformationType::class, $information);
+        $info_form->handleRequest($request);
+
+        if ($info_form->isSubmitted() && $info_form->isValid()) {
+            $informationRepository->add($information, true);
+
+            return $this->redirectToRoute('admin_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+
+
+
+
 
         $userform = $this->createForm(UserType::class, $user);
         $userform->remove('email');
@@ -89,7 +142,6 @@ class AdminController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setAvatar($newFileName);
@@ -99,7 +151,7 @@ class AdminController extends AbstractController
         }
 
 
-
+        //      Update password
         $passwordUpdate = new PasswordUpdate();
         $formPass = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
         $formPass->handleRequest($request);
@@ -123,6 +175,7 @@ class AdminController extends AbstractController
             'profil' => 'profil',
             'form_pass' => $formPass->createView(),
             'user' => $user,
+            'info_form' => $info_form->createView(),
             'slogan' => $slogan1,
             'userform' => $userform->createView()
         ]);
@@ -133,7 +186,7 @@ class AdminController extends AbstractController
 
 
 
-    #[Route('/tableau', name: 'admin_tableau', methods: ['GET', 'POST'])]
+    #[Route('/gestion_service', name: 'admin_tableau', methods: ['GET', 'POST'])]
     public function show(
         Request $request,
         ItemRepository $itemRepository,
@@ -142,6 +195,12 @@ class AdminController extends AbstractController
     ): Response {
 
         $user = $this->getUser();
+
+        if (!$user) {
+            $session = $request->getSession();
+            $session->clear();
+            return $this->redirectToRoute('app_login');
+        }
 
         $em = $doctrine->getManager();
 
@@ -183,5 +242,154 @@ class AdminController extends AbstractController
             'categories' => $categories,
             'form' => $form,
         ]);
+    }
+
+
+
+
+
+
+
+
+
+
+    #[Route('/service/edit', name: 'service_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, ItemRepository $itemRepository, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $item = $itemRepository->find($request->get('id'));
+        $categorie = $em->getRepository(Category::class)->findOneBy(['id' => $request->get('category')]);
+
+        $item->setCategory($categorie);
+        if ($request->get('description')) {
+            $item->setDescription($request->get('description'));
+        }
+
+        $item->setTitle($request->get('title'));
+        $item->setPrice($request->get('price'));
+
+        if ($request->get('imageFile')) {
+            $fl = $request->get('imageFile')->getData();
+            if ($fl) {
+                $originalFileName = pathinfo($fl->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFileName);
+                $newFileName = $safeFilename . '.' . $fl->guessExtension();
+
+                // Move the file to the directory
+                try {
+                    $fl->move(
+                        $this->getParameter('images_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $item->setImage($newFileName);
+            }
+        }
+
+
+        $itemRepository->add($item, true);
+
+        return $this->redirectToRoute('admin_tableau', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+    #[Route('/category/edit', name: 'category_edit', methods: ['GET', 'POST'])]
+    public function categoryEdit(Request $request, CategoryRepository $categoryRepository, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $category = $categoryRepository->find($request->get('id'));
+
+        $category->setTitle($request->get('title'));
+        $category->setCode($request->get('code'));
+
+
+
+        if ($request->get('imageFile')) {
+            $fl = $request->get('imageFile')->getData();
+            if ($fl) {
+                $originalFileName = pathinfo($fl->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFileName);
+                $newFileName = $safeFilename . '.' . $fl->guessExtension();
+
+                // Move the file to the directory
+                try {
+                    $fl->move(
+                        $this->getParameter('category_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $category->setFond($newFileName);
+            }
+        }
+
+
+        $categoryRepository->add($category, true);
+
+        return $this->redirectToRoute('admin_tableau', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+    #[Route('/Information', name: 'information', methods: ['GET', 'POST'])]
+    public function new(Request $request, InformationRepository $informationRepository): Response
+    {
+
+        $user = $this->getUser();
+        if (!$user) {
+            $session = $request->getSession();
+            $session->clear();
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($informationRepository->find(1)) {
+            $information = $informationRepository(1);
+        } else {
+            $information = new Information();
+        }
+
+        $form = $this->createForm(InformationType::class, $information);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $informationRepository->add($information, true);
+
+            return $this->redirectToRoute('admin_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('information/new.html.twig', [
+            'information' => $information,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/service/{id}/delete', name: 'delete_item', methods: ['POST'])]
+    public function delete_item(Request $request, Item $item, ItemRepository $itemRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $item->getId(), $request->request->get('_token'))) {
+            $itemRepository->remove($item, true);
+        }
+        $this->addFlash('success', 'service supprimé avec succès!');
+        return $this->redirectToRoute('admin_tableau', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/category/{id}/delete', name: 'delete_category', methods: ['POST'])]
+    public function delete_category(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+            $categoryRepository->remove($category, true);
+        }
+        $this->addFlash('success', 'categorie supprimé avec succès!');
+        return $this->redirectToRoute('admin_tableau', [], Response::HTTP_SEE_OTHER);
     }
 }

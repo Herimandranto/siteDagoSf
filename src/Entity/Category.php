@@ -129,7 +129,7 @@ class Category
         return $this->fond;
     }
 
-    public function setFond(string $fond): self
+    public function setFond(string $fond = null): self
     {
         $this->fond = $fond;
 

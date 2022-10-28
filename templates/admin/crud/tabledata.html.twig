@@ -8,11 +8,40 @@
 {% endblock  %}
 
 {% block body %}
-
+ 
 <section id="main-content">
     <section class="wrapper site-min-height">
         <div class="row">
             <div class="container">
+              {% for message in app.flashes('success') %}
+              <div class="alert text-center alert-success">
+                  {{ message }}
+              </div>
+            {% endfor %}
+
+
+<!-- button modal target -->
+
+            
+
+
+
+
+<style>
+    .d{
+      display:inline-block;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
                 <div class="col-lg-12 mt">
                     <div class="row content-panel">
                       <div class="panel-heading">
@@ -21,7 +50,7 @@
                             <a data-toggle="tab" href="#category" class="contact-map">Catégorie</a>
                           </li>
                           <li>
-                            <a data-toggle="tab" href="#item">Ajouter un nouveau Item</a>
+                            <a data-toggle="tab" href="#item">Service</a>
                           </li>
                         </ul>
                       </div>
@@ -31,7 +60,7 @@
                           <div id="category" class="tab-pane active">
                             <div class="row">
                               <div class="col-lg-8 col-lg-offset-2 detailed ">
-                                <h4 class="mb">Nouveau catégorie</h4>
+                                <h4 class="mb">Ajouter un Nouveau catégorie</h4>
                                 <div class="form-horizontal">
                                 {{ form_start(form) }}
                                   <div class="form-group">
@@ -47,7 +76,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group">
-                                    <label class="col-lg-2 control-label">Code</label>
+                                    <label class="col-lg-2 control-label">photo (fond)</label>
                                     <div class="col-lg-6">
                                       {{ form_widget(form.imageFile) }}
                                     </div>
@@ -63,13 +92,140 @@
                               <!-- /col-lg-8 -->
                               <!-- /col-md-6 -->
                             </div>
+                            {% if categories %}
+                            <div class="row">
+                              <div class="col-lg-8 col-lg-offset-2 detailed">
+                                <h4 class="mb">Liste des Catégories créée</h4>
+
+                                <table id="tab-category" class="display table table-striped table-hover table-bordered">                   
+                                  <thead style="background-color:#282e36;color:white;">
+                                      <tr >
+                                          <th class="text-center">Titre</th>
+                                          <th class="text-center">Code</th>
+                                          <th class="text-center">Image de fond</th>
+                                          <th class="text-center" width="130px">actions</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for category in categories %}
+                                        <tr>
+                                            <td  class="text-center">{{ category.title }}</td>
+                                            <td  class="text-center">{{ category.code }}</td>
+                                            <td  class="text-center"><center><img  style="width:70px;border-radius:5px;" src="{{ asset('admin/images/fond/'~category.fond) }}"/></center></td>
+                                            <td  class="text-center">
+
+                                              <button type="button" class="btn btn-success fa fa-pencil" data-toggle="modal" data-target="#editModal-{{ category.id }}" ></button>
+                                              <button type="button" class="btn btn-danger fa fa-trash-o" data-target="#small-1" data-toggle="modal"></button> 
+            
+                                                <div class="modal fade bd-example-modal-sm" tabindex="-1" id="small-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                  <div class="modal-dialog modal-sm">
+                                                    <form method="post" action="{{ path('delete_category', {'id': category.id}) }}">
+                                                      <div class="modal-content">
+                                                          
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                                                          <div class="modal-body">
+                                                            <p>Voulez-vous vraiment supprimer cette catégorie ?</p>
+                                                          </div>
+                                                        
+                                                        <div class="modal-footer">
+                                                          <button type="submit" class="btn btn-danger">oui</button>
+                                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">non</button>
+                                                        </div>
+                                                      </div>
+                                                    </form>
+                                                  </div>
+                                                </div>
+
+
+
+                                                <div class="modal fade" id="editModal-{{ category.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                  <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header" style="background:#48cfad;">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modifier la catégorie </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <form method="POST" action="{{ path('category_edit') }}" enctype="multipart/form-data">
+            
+                                                          <input type="hidden" name="id" value="{{ category.id }}">
+                                                          <div class="row">
+                                                            <div class="col-lg-12  detailed">
+                                                              <div class="form-horizontal">
+          
+                              
+                                                                    <div class="form-group">
+                                                                      <div class="col-lg-1"></div>
+                                                                      <label class="col-lg-2 control-label">titre</label>
+                                                                      <div class="col-lg-8">
+                                                                          <input type="text" name="title" value="{{ category.title }}" class="form-control">
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    <div class="form-group">
+                                                                      <div class="col-lg-1"></div>
+                                                                      <label class="col-lg-2 control-label">Code</label>
+                                                                      <div class="col-lg-8">
+                                                                          <input type="text" name="code" value="{{ category.code }}" class="form-control">
+                                                                          
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    <div class="form-group">
+                                                                      <div class="col-lg-1"></div>
+                                                                      <label class="col-lg-2 control-label"> photo</label>
+                                                                      <div class="col-lg-9">
+                                                                        <div class="row">
+                                                                          <div class="col-md-3">
+                                                                              <img  style="width:90px;border-radius:5px;" 
+                                                                              src="{{ asset('admin/images/fond/'~category.fond) }}"/>
+                                                                          </br></br>
+                                                                          </div>
+                                                                          <div class="col-md-7">
+                                                                            <center><input type="file" id="imageFile" name="imageFile" class="form-control"></center>
+                                                                          </div>
+                                                                        </div>
+            
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                  
+                                                              </div>
+                                                            </div>
+                                                          </div>        
+            
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">annuler</button>
+                                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                      </div>
+                                                    
+                                                    </form>
+            
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </div>
+                            {% endif %}
                             <!-- /row -->
                           </div>
                           <!-- /tab-pane -->
                           <div id="item" class="tab-pane">
                             <div class="row">
                               <div class="col-lg-8 col-lg-offset-2 detailed">
-                                <h4 class="mb">nouveau Item</h4>
+                                <h4 class="mb">Ajouter un nouveau Service</h4>
                                 <div class="form-horizontal">
                                     {{ form_start(form1) }}
 
@@ -108,7 +264,7 @@
                                   <div class="form-group">
                                     <label class="col-lg-2 control-label">Description</label>
                                     <div class="col-lg-10">
-                                      <textarea rows="10" cols="30" class="form-control"  name="description"></textarea>
+                                      <textarea rows="10" cols="30" required class="form-control" placeholder="Détails complet et description de l'Item "  name="description"></textarea>
                                     </div>
                                   </div>
                                     <div class="form-group">
@@ -122,6 +278,9 @@
                               
                             </div>
                             <!-- /row -->
+
+
+
                           </div>
                           <!-- /tab-pane -->
                         </div>
@@ -134,11 +293,12 @@
                 </div>
             </div>
             <br/>
+          </br>
             <div class="container">
-                <h3  class="text-center">Gestion des paramètres</h3>
-                <br/>
-                <table id="tab" class="display table table-striped table-hover table-bordered">
-                   
+              {% if items %}
+                <h3  class="text-center">Liste des Services</h3>
+
+                <table id="tab" class="display table table-striped table-hover table-bordered">                   
                     <thead style="background-color:#282e36;color:white;">
                         <tr >
                             <th class="text-center">Categorie</th>
@@ -159,26 +319,165 @@
                             <td  class="text-center"><center><img  style="width:70px;border-radius:5px;" src="{{ asset('admin/images/produits/'~item.image) }}"/></center></td>
                             <td  class="text-center">{{ item.price }}</td>
                             <td  class="text-center">
-                                <form method="post" action="#" onsubmit="return confirm('êtes-vous sur vouloir cet item?');">
-                                    <input type="hidden" name="_token" value="#">
-                                    <a class="btn btn-success fa fa-eye"></a>  
-                                    <a class="btn btn-primary fa fa-pencil"></a>  
-                                    <button class="btn btn-danger fa fa-trash-o"></button>
-                                </form>
+
+                                  <button type="button" class="btn btn-success fa fa-pencil" data-toggle="modal" data-target="#editModal" ></button>
+                                  <button type="button" class="btn btn-danger fa fa-trash-o" data-target="#small" data-toggle="modal"></button> 
+
+                                    <div class="modal fade bd-example-modal-sm" tabindex="-1" id="small" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-sm">
+                                        <form method="post" action="{{ path('delete_item', {'id': item.id}) }}">
+                                          <div class="modal-content">
+                                              
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+                                              <div class="modal-body">
+                                                <p>Voulez-vous vraiment supprimer ce service ?</p>
+                                              </div>
+                                            
+                                            <div class="modal-footer">
+                                              <button type="submit" class="btn btn-danger">oui</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">non</button>
+                                            </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+
+                                                                    
+                                    <!-- Modal Code -->
+
+                                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header" style="background:#48cfad;">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modifier ce service </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form method="POST" action="{{ path('service_edit') }}" enctype="multipart/form-data">
+
+                                              <input type="hidden" name="id" value="{{ item.id }}">
+                                              <div class="row">
+                                                <div class="col-lg-12  detailed">
+                                                  <div class="form-horizontal">
+
+                                                        <div class="form-group">
+                                                          <label class="col-lg-2 control-label">catégorie</label>
+                                                          <div class="col-lg-8">
+                                                              <select id="category"  class="form-control" name="category">
+                                                                  {% for ctgr in categories %}
+                                                                      
+                                                                      <option value="{{ ctgr.id }}" 
+                                                                      {% if item.category.id == ctgr.id %}
+                                                                        selected
+                                                                      {% endif %} 
+                                                                      > {{ ctgr.title }} </option>
+                                                                  {% endfor %}
+                                                              </select>
+                                                          </div>
+                                                        </div>
+                  
+                                                        <div class="form-group">
+                                                          <label class="col-lg-2 control-label">titre</label>
+                                                          <div class="col-lg-8">
+                                                              <input type="text" name="title" value="{{ item.title }}" class="form-control">
+                                                          </div>
+                                                        </div>
+                      
+                                                        <div class="form-group">
+                                                          <label class="col-lg-2 control-label">Tarif</label>
+                                                          <div class="col-lg-8">
+                                                              <input type="text" name="price" value="{{ item.price }}" class="form-control">
+                                                              
+                                                          </div>
+                                                        </div>
+                      
+                                                        <div class="form-group">
+                                                          <label class="col-lg-2 control-label"> photo</label>
+                                                          <div class="col-lg-10">
+                                                            <div class="row">
+                                                              <div class="col-md-3">
+                                                                  <img  style="width:90px;border-radius:5px;" 
+                                                                  src="{{ asset('admin/images/produits/'~item.image) }}"/>
+                                                              </br></br>
+                                                              </div>
+                                                              <div class="col-md-7">
+                                                                <center><input type="file" id="imageFile" name="imageFile" class="form-control"></center>
+                                                              </div>
+                                                            </div>
+
+                                                          </div>
+                                                        </div>
+                      
+                                                        <div class="form-group">
+                                                          <label class="col-lg-2 control-label">Description</label>
+                                                          <div class="col-lg-10">
+                                                            <textarea rows="10" cols="30"  class="form-control" placeholder="{{ item.description }}"  
+                                                            name="description">{{ item.description }}</textarea>
+                                                          </div>
+                                                        </div>
+                                                      
+                                                  </div>
+                                                </div>
+                                              </div>        
+
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">annuler</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                          </div>
+                                        
+                                        </form>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- End of Modal Code -->
+
+                                    
+
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                {% else %}
+                <h4  class=" text-center">Vous n'avez pas de service disponible pour l'instant,Veuillez en créer pour l'afficher ici</h3>
+                {% endif %}
             </div>
         </div>
     </section>
 </section>
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
 
 {% block javascripts %}
 <script src="{{ asset('admin/datatable/datatables.min.js') }}"></script>
 <script type="text/javascript">
+
+
+  
+$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+
 
     $(document).ready(function(){
         $('#tab').DataTable({

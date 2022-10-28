@@ -3,8 +3,8 @@
   
       <!-- sidebar menu start-->
       <ul class="sidebar-menu" id="nav-accordion">
-        <p class="centered"><a href="profile.html"><img src="{{ asset('admin/images/avatar/'~user.avatar) }}" class="img-circle" width="80"></a></p>
-        <h5 class="centered">Nom Admin</h5>
+        <p class="centered"><a href="profile.html"><img src="{{ asset('admin/images/avatar/'~user.avatar) }}" class="img-circle" width="80px"></a></p>
+        <h5 class="username">{{ user.email }}</h5>
         
         <li class="mt">
           <a class="{{ accueil is defined ? 'active' : ''  }}" href="#">
@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="sub-menu">
-          <a href="#">
+          <a class="{{ extra is defined ? 'active' : ''  }}" href="{{ path('admin_extra_page') }}">
             <i class="fa fa-book"></i>
             <span>Extra Pages</span>
             </a>

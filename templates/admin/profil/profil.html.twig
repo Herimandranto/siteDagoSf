@@ -24,11 +24,11 @@
               <div class="col-md-5 profile-text">
                 <form method="POST" action="#">
                   <h3>Texte Slogan</h3>
-                  <p>{% if slogan.title %}{{ slogan.title }}{% else %}Vous n'avez pas encore ajouter un slogan {% endif %}</p>
+                  <p>{% if slogan %}{{ slogan.title }}{% else %}Vous n'avez pas encore ajouter un slogan {% endif %}</p>
                   
-                  <input type="text" class="form-control" name="slogan">
+                  <textarea name="slogan" class="form-control" cols="15" rows="3" placeholder="le texte qui apparait sur les photos de la page d'accueil"></textarea>
                   
-                  <p style="margin-top:5px;"><button class="btn btn-theme"><i class="fa fa-edit"></i> Modifier</button></p>
+                  <p style="margin-top:5px;"><button class="btn btn-theme"><i class="fa fa-edit"></i> Enregistrer</button></p>
                 </form>
               </div>
               <!-- /col-md-4 -->
@@ -37,9 +37,9 @@
                   <p><img src="{{ asset('admin/images/avatar/'~user.avatar) }}" class="img-circle"></p>
                   <p>
                     {{ form_start(userform) }}
-                    <center>{{ form_widget(userform.avatarFile) }}                                                    
+                      <div style="margin-left:38%">{{ form_widget(userform.avatarFile) }}</div></br>                                                  
                       {{ form_errors(userform.avatarFile) }}
-                    <button class="btn btn-theme02">Modifier la photo</button>
+                    <div><button class="btn btn-theme02">Modifier la photo</button></div>
                     {{ form_end(userform) }}
                   </p>
                 </div>
@@ -57,7 +57,7 @@
                     <a data-toggle="tab" href="#contact" class="contact-map">Contact</a>
                   </li>
                   <li>
-                    <a data-toggle="tab" href="#edit">Edit Profile</a>
+                    <a data-toggle="tab" href="#edit">Mot de passe</a>
                   </li>
                 </ul>
               </div>
@@ -67,51 +67,65 @@
                   <div id="contact" class="tab-pane active">
                     <div class="row">
                       <div class="col-lg-8 col-lg-offset-2 detailed mt">
-                        <h4 class="mb">Contact Information</h4>
-                        <form role="form" class="form-horizontal">
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 1</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="addr1" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 2</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="addr2" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Phone</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="phone" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Cell</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="cell" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Email</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="email" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Skype</label>
-                            <div class="col-lg-6">
-                              <input type="text" placeholder=" " id="skype" class="form-control">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                              <button class="btn btn-theme" type="submit">Save</button>
-                              <button class="btn btn-theme04" type="button">Cancel</button>
-                            </div>
-                          </div>
-                        </form>
+                        <h4 class="mb">Information de Contact</h4>
+                        <div class="form-horizontal">
+                          {{ form_start(info_form) }}
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">Adresse <span class="text-danger">*</sapn></label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.adresse) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">Email <span class="text-danger">*</sapn></label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.email) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">Phone <span class="text-danger">*</sapn></label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.phone) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">Facebook <span class="text-danger">*</sapn></label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.facebook) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">Skype</label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.skype) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">WathsApp</label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.wathsapp) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-1"></div>
+                                <label class="col-lg-2 control-label">LinkedIn</label>
+                                <div class="col-lg-6">
+                                  {{ form_widget(info_form.linkedIn) }}
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-lg-offset-3 col-lg-9">
+                                  <button class="btn btn-theme" type="submit">Enregistrer</button>
+                                </div>
+                              </div>
+                          {{ form_end(info_form) }}
+                        </div>
                       </div>
                       <!-- /col-lg-8 -->
                       <!-- /col-md-6 -->
@@ -120,9 +134,10 @@
                   </div>
                   <!-- /tab-pane -->
                   <div id="edit" class="tab-pane">
+                    
                     <div class="row">
-                      <div class="col-lg-19 col-lg-offset-2 detailed">
-                        <h4 class="mb">Information Personnelle</h4>
+                      <div class="col-lg-9 col-lg-offset-2 detailed">
+                        <h4 class="mb">Mettre à jour votre Mot de passe</h4>
                         <div class="form-horizontal">
                           {{ form_start(form_pass) }}
                           <div class="form-group">

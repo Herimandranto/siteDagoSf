@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>Dagoutsourcing</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+
+
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+  <!-- Icon Font Css -->
+  <link rel="stylesheet" href="{{ asset('plugins/icofont/icofont.min.css') }}">
+  <!-- Slick Slider  CSS -->
+  <link rel="stylesheet" href="{{ asset('plugins/slick-carousel/slick/slick.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/slick-carousel/slick/slick-theme.css') }}">
+
+
+  {% include 'css.html.twig' %}
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ asset('css3/style.css') }}">
+
+</head>
+
+<body>
+
+   <div class="container" style="margin: 30px auto;top:0;">
+    <div class="row align-items-center">
+      <div class="col-10 col-lg-12">
+        <center><a href="index.php" class="site-logo">
+            <span><img src="{{ asset('images/logo.png') }}" width="45px" style="margin-bottom:6px"> </span>Dagoutsourcing
+          </a></center>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid">
+  <section class="hero-wrap hero-wrap-2 dtls" style="background-image: url('{{ asset('images/appel4.png') }}');" data-stellar-background-ratio="0.5">
+  <div class="overlay" style="background-color: gray;"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-end">
+      <div class="col-md-9 pb-5">
+        <h1 class="mb-0 bread b52">Développement Web /</h1>
+
+        <ul class="list-inline b52 breadcumb-nav">
+            <li class="list-inline-item">
+              <p><a href="javascript:history.back()" style="margin-bottom:10px;" class="btn btn-white">retour</a></p>
+            </li> 
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <section class="section department-single">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="department-content mt-5">
+            <h3 class="text-md">Medecine and Health</h3>
+            <div class="divider my-4"></div>
+            <p class="lead">Age forming covered you entered the examine. Blessing scarcely confined her contempt wondered shy. Dashwoods contented sportsmen at up no convinced cordially affection.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum recusandae dolor autem laudantium, quaerat vel dignissimos. Magnam sint suscipit omnis eaque unde eos aliquam distinctio, quisquam iste, itaque possimus . Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet alias modi eaque, ratione recusandae cupiditate dolorum repellendus iure eius rerum hic minus ipsa at, corporis nesciunt tempore vero voluptas. Tempore.</p>
+
+
+            <h3 class="mt-5 mb-4">Services features</h3>
+            <div class="divider my-4"></div>
+            <ul class="list-unstyled department-service">
+              <li><i class="icofont-check mr-2"></i>International Drug Database</li>
+              <li><i class="icofont-check mr-2"></i>Stretchers and Stretcher Accessories</li>
+              <li><i class="icofont-check mr-2"></i>Cushions and Mattresses</li>
+              <li><i class="icofont-check mr-2"></i>Cholesterol and lipid tests</li>
+              <li><i class="icofont-check mr-2"></i>Critical Care Medicine Specialists</li>
+              <li><i class="icofont-check mr-2"></i>Emergency Assistance</li>
+            </ul>
+
+            <a href="appoinment.html" class="btn btn-main-2 btn-round-full">Make an Appoinment<i class="icofont-simple-right ml-2  "></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="sidebar-widget schedule-widget mt-5">
+            <h5 class="mb-4">Time Schedule</h5>
+
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between align-items-center">
+                <a href="#">Monday - Friday</a>
+                <span>9:00 - 17:00</span>
+              </li>
+              <li class="d-flex justify-content-between align-items-center">
+                <a href="#">Saturday</a>
+                <span>9:00 - 16:00</span>
+              </li>
+              <li class="d-flex justify-content-between align-items-center">
+                <a href="#">Sunday</a>
+                <span>Closed</span>
+              </li>
+            </ul>
+
+            <div class="sidebar-contatct-info mt-4">
+              <p class="mb-0">Need Urgent Help?</p>
+              <h3>+23-4565-65768</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  {% include 'site/footer.html.twig' %}
+ 
+  {% include 'site/js.html.twig' %}
+  
+
+
+  <!-- Main jQuery -->
+  <script src="{{ asset('plugins/jquery/jquery.js') }}"></script>
+  <!-- Bootstrap 4.3.2 -->
+  <script src="{{ asset('plugins/bootstrap/js/popper.js') }}"></script>
+  <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('plugins/counterup/jquery.easing.js') }}"></script>
+  <!-- Slick Slider -->
+  <script src="{{ asset('plugins/slick-carousel/slick/slick.min.js') }}"></script>
+  <!-- Counterup -->
+  <script src="{{ asset('plugins/counterup/jquery.waypoints.min.js') }}"></script>
+
+  <script src="{{ asset('plugins/shuffle/shuffle.min.js') }}"></script>
+  <script src="{{ asset('plugins/counterup/jquery.counterup.min.js') }}"></script>
+
+
+  <script src="{{ asset('js/script.js') }}"></script>
+  <script src="{{ asset('js/contact.js') }}"></script>
+
+</body>
+
+</html>

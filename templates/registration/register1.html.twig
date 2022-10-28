@@ -1,0 +1,113 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Dagoutsourcing | Admin - Login</title>
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+  
+  <!-- Bootstrap core CSS -->
+  <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!--external css-->
+  <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin/css/style-responsive.css') }}" rel="stylesheet">
+   
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+
+    {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    <div class="container">
+        <div class="form-login">
+                {{ form_start(registrationForm) }}
+
+                    <h2 class="form-login-heading">Inscription</h2>
+                    <div class="login-wrap">
+                    {{ form_row(registrationForm.email) }}
+                    <br>
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    
+                    {{ form_row(registrationForm.agreeTerms) }}
+                            
+                    <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> s'inscrire</button>
+                    <hr>
+                    
+                    <div class="registration">
+                        Vous avez déjà un compte?<br/>
+                        <a class="" href="{{ path('app_login') }}">
+                        redirriger vers la page de login
+                        </a>
+                    </div>
+
+                    </div>
+                    <!-- Modal -->
+                    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Vous avez oublié votre mot de passe ?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Entrer votre adresse mail pour réinitialiser votre mot de passe.</p>
+                            <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">annuler</button>
+                            <button class="btn btn-theme" type="button">Envoyer</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- modal -->
+                {{ form_end(registrationForm) }}
+        </div>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+  <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="{{ asset('admin/js/jquery.backstretch.min.js') }}"></script>
+  <script>
+    $.backstretch("{{ asset('images/fongLogin.png') }}", {
+      speed: 500
+    });
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}contact{% endblock %}
+
+{% block body %}
+
+
+<div class="tab-pane" id="contact">
+    <!-- END nav -->
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('images1/bg_2.jpg') }}');" data-stellar-background-ratio="0.5">
+    <div class="overlay" style="background-color: gray;"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end">
+        <div class="col-md-9 pb-5">
+            <h1 class="mb-0 bread">Nous contacter</h1>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="wrapper">
+            <div class="row no-gutters">
+                <div class="col-lg-8 col-md-7 order-md-last d-flex align-items-stretch">
+                <div class="contact-wrap w-100 p-md-5 p-4">
+                    <h3 class="mb-4"></h3>
+                    <div id="form-message-warning" class="mb-4"></div>
+                    <div id="form-message-success" class="mb-4">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert text-center alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <form method="POST" action="{{ path('contact') }}"  name="contactForm" class="contactForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="label" for="name">Nom</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Votre nom">
+                        </div>
+                        </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="label" for="email">Adresse Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="votre adresse email">
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="label" for="subject">Sujet</label>
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Sujet du message">
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="label" for="#">Message</label>
+                            <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Redigez votre message ici"></textarea>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" value=" Envoyer " class="btn btn-info">
+                            <div class="submitting"></div>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                </div>
+                <div class="col-lg-4 col-md-5 d-flex align-items-stretch">
+                <div class="info-wrap bg-secondary w-100 p-md-5 p-4">
+                    <h5 class="text-white">Dagoutsourcing vous offre le meilleur</h3>
+
+                    <div class=" dbox w-100 d-flex align-items-center start">
+                        <div class="text pl-3">
+                        <p><span class="flaticon-call"></span> Phone: <a href="tel://1234567920">+ 261 32 60 463 72</a></p>
+                        </div>
+                    </div>
+
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="text pl-3" style="width: 100%;">
+                        <p><span class="flaticon-email"></span> Email: <a href="mailto:info@yoursite.com">site@dagoutsouring.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="text pl-3">
+                        <p>
+                            <a href="https://web.facebook.com/outsourcingmada" target="_blank" rel="noopener noreferrer" class="foot-icon">
+                                <img width="50px" src="{{ asset('images/facebook-white-icon.png') }}" alt="">
+                            </a> 
+                            <a href="https://web.facebook.com/outsourcingmada" target="_blank" rel="noopener noreferrer" class="foot-icon">
+                                 facebook
+                            </a>
+                        </p>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+  </div>
+
+
+{% endblock  %}

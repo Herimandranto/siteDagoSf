@@ -73,6 +73,8 @@ body {
   background-color: #fff;
 }
 
+
+
 .foot {
   color: white !important;
 }
@@ -81,8 +83,21 @@ body {
   color: #c00436 !important;
 }
 
-.foot-icon {
-  width: 50px;
+.whatsapp:hover {
+  color: palegreen !important;
+}
+
+.facebook:hover {
+  color: #0069d9 !important;
+}
+
+.linkedin:hover,
+.linkedin:focus {
+  color: #007bff !important;
+}
+
+.skype:hover {
+  color: #007bff !important;
 }
 
 [tabindex="-1"]:focus {

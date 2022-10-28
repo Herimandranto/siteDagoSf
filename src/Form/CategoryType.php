@@ -15,11 +15,14 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                'required' => 'true',
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => 'exemple: Relation Client, Dev web, ... '
                 ]
             ])
             ->add('code', TextType::class, [
+                'required' => 'true',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'abréviation ou sigle'
@@ -28,8 +31,8 @@ class CategoryType extends AbstractType
             ->add('imageFile', VichFileType::class, [
                 'required' => false,
                 'download_label' => false,
-                'allow_delete' => false,
-                'delete_label'   => false,
+                'allow_delete' => true,
+                'delete_label'   => true,
                 'label' => 'Fichier',
                 'label_attr' => [
                     'class' => '',

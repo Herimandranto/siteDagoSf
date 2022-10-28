@@ -1,9 +1,41 @@
+<style>
+  .go-top{
+    float:right;
+    margin-top:-70px;
+    font-size:30px;
+  }
+</style>
+
+
 <footer class="footer">
+
     <div class="container-fluid px-lg-5">
       <div class="row">
         <div class="col-md-3">
-          <h2 class="title-footer foot"><span><img src="images/logo.png" width="45px" style="margin-bottom:6px"> </span> Dagoutsourcing</h2>
-          <center><a href="https://web.facebook.com/outsourcingmada" target="_blank" rel="noopener noreferrer" class="foot-icon"><img width="50px" src="images/facebook-white-icon.png" alt=""></a></center>
+          <h2 class="title-footer foot"><span><img src="{{ asset('images/logo.png') }}" width="45px" style="margin-bottom:6px"> </span> Dagoutsourcing</h2>
+          <center>
+            {% if information.facebook %}
+            <a href="https://web.facebook.com/outsourcingmada" target="_blank" rel="noopener noreferrer" class="facebook foot-icon">
+              <img width="50px" src="{{ asset('images/facebook-white-icon.png') }}" alt="">
+            </a>
+            {% endif %}
+            {% if information.skype %}
+            <a href="https://web.facebook.com/outsourcingmada" style="margin-right:6px;" target="_blank" rel="noopener noreferrer" class="skype foot-icon">
+              <img width="35px" src="{{ asset('images/skype.png') }}" alt="">
+            </a>
+            {% endif %}
+            {% if information.wathsapp %}
+            <a href="https://web.facebook.com/outsourcingmada" target="_blank" style="margin-right:6px;" rel="noopener noreferrer" class="whatsapp foot-icon">
+              <img width="35px" src="{{ asset('images/whatsapp.png') }}" alt="">
+            </a>
+            {% endif %}
+            {% if information.linkedIn %}
+            <a href="https://web.facebook.com/outsourcingmada" target="_blank" style="margin-right:6px;" rel="noopener noreferrer" class="linkedin foot-icon">
+              <img width="35px" src="{{ asset('images/linkedin.png') }}" alt="">
+            </a>
+            {% endif %}
+          
+          </center>
         </div>
   
         <div class="col-md-9 py-5">
@@ -13,13 +45,13 @@
               <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-10">
                   <div class="row">
-                    <div class="col-md-4 mb-md-0 mb-4">
+                    <div class="col-md-5 mb-md-0 mb-4">
                       <h2 class="footer-heading text-center">Coordonnées</h2>
                       <ul class="list-unstyled">
-                        <li><a href="#" class="py-1 d-block foot text-center">Immeuble DAGO BP 4216</a></li>
-                        <li><a href="tel:+261326046372" class="py-1 foot d-block text-center">+261 32 60 463 72</a>
+                        <li><a href="#" class="py-1 d-block foot text-center">{{ information.adresse }}</a></li>
+                        <li><a href="tel:+261326046372" class="py-1 foot d-block text-center">{{ information.phone }}</a>
                         </li>
-                        <li><a href="#" class="py-1 d-block foot text-center">site@dagoutsourcing.mg</a></li>
+                        <li><a href="#" class="py-1 d-block foot text-center">{{ information.email }}</a></li>
                         <li><a href="#" class="py-1 d-block foot text-center">Contactez-nous</a></li>
                       </ul>
                     </div>
@@ -33,7 +65,7 @@
                         <li><a href="#" class="py-1 d-block foot text-center">Policies</a></li>
                       </ul>
                     </div>
-                    <div class="col-md-4 mb-md-0 mb-4">
+                    <div class="col-md-3 mb-md-0 mb-4">
                       <h2 class="footer-heading text-center">Resources</h2>
                       <ul class="list-unstyled">
                         <li><a href="#" class="py-1 d-block foot text-center">Security</a></li>
@@ -46,9 +78,18 @@
                 </div>
               </div>
             </div>
+      
           </div>
         </div>
+
+        <div class="col-md-12">
+            <a href="#" class="go-top text-white">
+              <i class="fa fa-angle-up"></i>
+              </a>
+        </div>
+      </div>
   
       </div>
     </div>
-  </footer>
+   
+</footer>

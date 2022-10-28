@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Item;
 use Symfony\Component\Form\AbstractType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-use Symfony\Component\Form\FormBuilderInterface; 
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -16,30 +16,29 @@ class ItemType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                'required' => 'true',
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => 'ex: appel sortant, Création de site web,...'
                 ]
             ])
             ->add(
                 'price',
                 TextType::class,
                 [
+                    'required' => 'true',
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'placeholder' => 'tarif ou coût du service '
                     ]
                 ]
             )
-            ->add('description', TextType::class, [
-                'required' => false,
-                'attr' => [
-                    'placeholder' => "décrire le produit",
-                ]
-            ])
+
             ->add('imageFile', VichFileType::class, [
-                'required' => false,
+                'required' => true,
                 'download_label' => false,
-                'allow_delete' => false,
-                'delete_label'   => false,
+                'allow_delete' => true,
+                'delete_label'   => true,
                 'label' => 'Fichier',
                 'label_attr' => [
                     'class' => '',

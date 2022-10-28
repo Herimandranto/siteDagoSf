@@ -6,6 +6,9 @@
 parameters:
     app.path.product_images: /uploads/images/produits
     avatar_directory: '%kernel.project_dir%/public/admin/images/avatar'
+    images_directory: '%kernel.project_dir%/public/admin/images/produits'
+    category_directory: '%kernel.project_dir%/public/admin/images/fond'
+
 
 services:
     

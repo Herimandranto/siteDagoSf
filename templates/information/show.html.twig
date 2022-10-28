@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information{% endblock %}
+
+{% block body %}
+    <h1>Information</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ information.id }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ information.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ information.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ information.email }}</td>
+            </tr>
+            <tr>
+                <th>Facebook</th>
+                <td>{{ information.facebook }}</td>
+            </tr>
+            <tr>
+                <th>Skype</th>
+                <td>{{ information.skype }}</td>
+            </tr>
+            <tr>
+                <th>LinkedIn</th>
+                <td>{{ information.linkedIn }}</td>
+            </tr>
+            <tr>
+                <th>Wathsapp</th>
+                <td>{{ information.wathsapp }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_information_index') }}">back to list</a>
+
+    <a href="{{ path('app_information_edit', {'id': information.id}) }}">edit</a>
+
+    {{ include('information/_delete_form.html.twig') }}
+{% endblock %}
